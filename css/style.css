@@ -1,0 +1,153 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  background: #1b263b;
+  color: #fff;
+}
+
+h1 { margin: 10px 0; }
+
+#start-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+#game {
+  position: relative;
+  width: 800px;
+  height: 300px;
+  border: 3px solid #fff;
+  overflow: hidden;
+  background-color: #87ceeb;
+}
+
+/* Background & Ground */
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1600px;
+  height: 300px;
+  background: url("../assets/background.png") repeat-x;
+  background-size: cover;
+  animation: bgScroll 20s linear infinite;
+}
+
+#ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1600px;
+  height: 72px;
+  background: url("../assets/tileset.png") repeat-x;
+  background-size: contain;
+  animation: groundScroll 6s linear infinite;
+  z-index: 1;
+}
+
+/* Fox */
+#fox {
+  position: absolute;
+  bottom: 64px;
+  left: 80px;
+  width: 70px;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+/* Obstacles */
+.obstacle {
+  position: absolute;
+  bottom: 68px;
+  width: 64px;
+  height: 64px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  z-index: 5;
+}
+
+/* Overlay elements */
+#score {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-weight: bold;
+  z-index: 5;
+}
+
+#message {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  font-weight: bold;
+  color: #ffb703;
+  text-shadow: 2px 2px #000;
+  z-index: 10;
+}
+
+/* Animations */
+@keyframes bgScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-800px); }
+}
+
+@keyframes groundScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-800px); }
+}
+
+/* Parallax Background */
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1600px;
+  height: 300px;
+  background: url("../assets/background.png") repeat-x;
+  background-size: 70% auto;
+  filter: brightness(0.9) contrast(1.1);
+  animation: bgScroll 35s linear infinite;
+}
+
+/* Ground tiles */
+#ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1600px;
+  height: 72px; 
+  background: url("../assets/tileset.png") repeat-x;
+  background-size: contain;
+  animation: groundScroll 6s linear infinite;
+}
+
+/* Fox */
+#fox {
+  position: absolute;
+  bottom: 72px;
+  left: 80px;
+  width: 70px;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+/* Obstacles */
+.obstacle {
+  position: absolute;
+  bottom: 72px;  
+  width: 64px;
+  height: 64px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
