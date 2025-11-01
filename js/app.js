@@ -200,9 +200,9 @@ function spawnObstacle() {
 
   const isLog = Math.random() > 0.5;
 
-  const imgPath = isLog
-    ? "../assets/log.png"
-    : "../assets/rock.png";
+const imgPath = isLog
+  ? "./assets/log.png"
+  : "./assets/rock.png";
 
   obstacle.style.backgroundImage = `url('${imgPath}')`;
   obstacle.style.width = "64px";
