@@ -4,25 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fox Leap!</title>
+
+  <link rel="icon" type="image/png" href="./assets/standingfox.png">
+
   <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/data.js"></script>
-  <script src="./js/app.js"></script>
 </head>
 <body>
-  <h1>Fox Leap!</h1>
-  <button id="start-btn">Start Game</button>
-
   <div id="game">
-    <p id="score">Score: 0</p>
-    <p id="message"></p>
-
-    <!-- Background + ground -->
     <div id="background"></div>
     <div id="ground"></div>
-
-    <!-- Fox avatar -->
-    <img id="fox" src="./assets/standingfox.png" alt="Fox">
+    <img id="fox" src="./assets/standingfox.png" alt="Fox Avatar">
   </div>
-  
+
+  <div id="ui">
+    <button id="start-btn">Start Game</button>
+    <p id="score">Score: 0</p>
+    <p id="message"></p>
+  </div>
+
+  <script src="./js/data.js"></script>
+  <script src="./js/app.js"></script>
 </body>
 </html>
