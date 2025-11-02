@@ -87,6 +87,7 @@ function startGame() {
   scoreDisplay.textContent = "Score: 0";
   message.textContent = "";
   startBtn.style.display = "none";
+  document.getElementById("instructions").style.display = "none";
   fox.src = FOX_IDLE;
 
   obstacles.forEach(o => o.remove());
@@ -153,7 +154,7 @@ function updateGame(timestamp) {
 
     // Off-screen cleanup + score
     if (left < -64 && !obs.scored) {
-      obs.scored = true; // prevent double-score
+      obs.scored = true;
       obs.remove();
       obstacles.splice(i, 1);
       score++;
@@ -254,5 +255,6 @@ function endGame(win) {
   obstacles = [];
   message.textContent = win ? "You Win, Clever Fox! 🎉" : "Game Over! Try Again, Fox!";
   startBtn.style.display = "inline-block";
+  document.getElementById("instructions").style.display = "block";
   fox.src = FOX_IDLE;
 }

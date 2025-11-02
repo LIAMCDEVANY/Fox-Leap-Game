@@ -144,6 +144,28 @@ body {
   display: block;
 }
 
+/* Instructions Box */
+
+#instructions {
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  width: 700px;
+  text-align: center;
+  line-height: 1.4;
+  font-size: 15px;
+  text-shadow: 1px 1px 2px #000;
+}
+
+#instructions h3 {
+  color: #ffb347;
+  margin-bottom: 6px;
+  font-size: 18px;
+}
+
+
 /* ------------------------------
    ACCESSIBILITY + AESTHETICS
    ------------------------------ */
