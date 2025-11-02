@@ -67,17 +67,19 @@ let foxBottom = 72;
 let score = 0;
 let gameRunning = false;
 let obstacles = [];
-let nextSpawn = 0; // controls spawn timing
+let nextSpawn = 0;
 
 // ----------------------------
 // EVENT LISTENERS
 // ----------------------------
+
 startBtn.addEventListener("click", startGame);
 document.addEventListener("keydown", handleKeyDown);
 
 // ----------------------------
 // START + RESTART GAME
 // ----------------------------
+
 function startGame() {
   score = 0;
   foxBottom = 72;
@@ -105,6 +107,7 @@ function handleKeyDown(e) {
 // ----------------------------
 // MAIN GAME LOOP (SINGLE ENGINE)
 // ----------------------------
+
 function updateGame(timestamp) {
   if (!gameRunning) return;
 
@@ -170,6 +173,7 @@ function updateGame(timestamp) {
 // ----------------------------
 // JUMP FUNCTION
 // ----------------------------
+
 function jump() {
   isJumping = true;
   velocity = JUMP_FORCE;
@@ -179,6 +183,7 @@ function jump() {
 // ----------------------------
 // OBSTACLE CREATION
 // ----------------------------
+
 function spawnObstacle() {
   if (!gameRunning) return;
 
@@ -203,6 +208,7 @@ function spawnObstacle() {
 // ----------------------------
 // RANDOM DELAY FUNCTION
 // ----------------------------
+
 function getRandomDelay() {
   const isHard = score >= HARD_MODE_SCORE;
   const minDelay = isHard ? HARD_SPAWN_MIN : SPAWN_INTERVAL_MIN;
@@ -213,6 +219,7 @@ function getRandomDelay() {
 // ----------------------------
 // DUST PUFF EFFECT
 // ----------------------------
+
 function createDustPuff() {
   const puff = document.createElement("div");
   puff.style.position = "absolute";
@@ -240,11 +247,12 @@ function createDustPuff() {
 // ----------------------------
 // END GAME
 // ----------------------------
+
 function endGame(win) {
   gameRunning = false;
   obstacles.forEach(o => o.remove());
   obstacles = [];
-  message.textContent = win ? "You Win!" : "Game Over!";
+  message.textContent = win ? "You Win, Clever Fox! 🎉" : "Game Over! Try Again, Fox!";
   startBtn.style.display = "inline-block";
   fox.src = FOX_IDLE;
 }
