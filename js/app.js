@@ -52,7 +52,7 @@ WIN CONDITION:
 */
 
 // ----------------------------
-// FOX LEAP! MAIN GAME SCRIPT
+// FOX LEAP! MAIN GAME SCRIPT (FINAL FIX)
 // ----------------------------
 
 const startBtn = document.getElementById("start-btn");
@@ -67,6 +67,7 @@ let foxBottom = 72;
 let score = 0;
 let gameRunning = false;
 let obstacles = [];
+let nextSpawn = 0; // controls spawn timing
 
 // ----------------------------
 // EVENT LISTENERS
@@ -75,7 +76,7 @@ startBtn.addEventListener("click", startGame);
 document.addEventListener("keydown", handleKeyDown);
 
 // ----------------------------
-// START + RESTART
+// START + RESTART GAME
 // ----------------------------
 function startGame() {
   score = 0;
@@ -86,12 +87,11 @@ function startGame() {
   startBtn.style.display = "none";
   fox.src = FOX_IDLE;
 
-  // Clear old obstacles
   obstacles.forEach(o => o.remove());
   obstacles = [];
   gameRunning = true;
+  nextSpawn = performance.now() + getRandomDelay();
 
-  spawnObstacle();
   requestAnimationFrame(updateGame);
 }
 
@@ -103,22 +103,20 @@ function handleKeyDown(e) {
 }
 
 // ----------------------------
-// MAIN GAME LOOP
+// MAIN GAME LOOP (SINGLE ENGINE)
 // ----------------------------
-function updateGame() {
+function updateGame(timestamp) {
   if (!gameRunning) return;
 
   // Apply gravity
   foxBottom += velocity;
   velocity -= GRAVITY;
 
-  // Limit jump height
   if (foxBottom > MAX_JUMP_HEIGHT) {
     foxBottom = MAX_JUMP_HEIGHT;
     velocity = Math.min(velocity, 0);
   }
 
-  // Floor collision
   if (foxBottom <= 72) {
     foxBottom = 72;
     if (isJumping) {
@@ -131,11 +129,46 @@ function updateGame() {
   }
 
   fox.style.bottom = foxBottom + "px";
+
+  // Spawn obstacles at random intervals
+  if (timestamp > nextSpawn) {
+    spawnObstacle();
+    nextSpawn = timestamp + getRandomDelay();
+  }
+
+  // Move and manage obstacles
+  obstacles.forEach((obs, i) => {
+    let left = parseFloat(obs.style.left);
+    left -= OBSTACLE_SPEED;
+    obs.style.left = left + "px";
+
+    // Collision detection
+    if (left < 80 + 50 && left + 50 > 80 && foxBottom < 110) {
+      endGame(false);
+      return;
+    }
+
+    // Off-screen cleanup + score
+    if (left < -64 && !obs.scored) {
+      obs.scored = true; // prevent double-score
+      obs.remove();
+      obstacles.splice(i, 1);
+      score++;
+      scoreDisplay.textContent = `Score: ${score}`;
+
+      if (score === HARD_MODE_SCORE) OBSTACLE_SPEED = HARD_OBSTACLE_SPEED;
+      if (score >= WIN_SCORE) {
+        endGame(true);
+        return;
+      }
+    }
+  });
+
   requestAnimationFrame(updateGame);
 }
 
 // ----------------------------
-// JUMP
+// JUMP FUNCTION
 // ----------------------------
 function jump() {
   isJumping = true;
@@ -144,7 +177,7 @@ function jump() {
 }
 
 // ----------------------------
-// OBSTACLE SPAWNING
+// OBSTACLE CREATION
 // ----------------------------
 function spawnObstacle() {
   if (!gameRunning) return;
@@ -161,60 +194,24 @@ function spawnObstacle() {
   obstacle.style.left = GAME_WIDTH + "px";
   obstacle.style.bottom = isLog ? "68px" : "66px";
   obstacle.style.zIndex = "5";
+  obstacle.scored = false;
 
   game.appendChild(obstacle);
   obstacles.push(obstacle);
-
-  // Move obstacle (single control loop)
-  const moveInterval = setInterval(() => {
-    if (!gameRunning) {
-      clearInterval(moveInterval);
-      obstacle.remove();
-      return;
-    }
-
-    let left = parseInt(obstacle.style.left);
-    left -= OBSTACLE_SPEED;
-    obstacle.style.left = left + "px";
-
-    // Collision check
-    if (left < 80 + 50 && left + 50 > 80 && foxBottom < 110) {
-      endGame(false);
-      clearInterval(moveInterval);
-      return;
-    }
-
-    // Off-screen cleanup & score
-    if (left < -64) {
-      clearInterval(moveInterval);
-      obstacle.remove();
-      obstacles.splice(obstacles.indexOf(obstacle), 1);
-
-      // ✅ Only score once per obstacle
-      score++;
-      scoreDisplay.textContent = `Score: ${score}`;
-
-      if (score === HARD_MODE_SCORE) OBSTACLE_SPEED = HARD_OBSTACLE_SPEED;
-      if (score >= WIN_SCORE) {
-        endGame(true);
-        return;
-      }
-    }
-  }, 20);
-
-  // Random delay before next spawn
-  const isHard = score >= HARD_MODE_SCORE;
-  const minDelay = isHard ? HARD_SPAWN_MIN : SPAWN_INTERVAL_MIN;
-  const maxDelay = isHard ? HARD_SPAWN_MAX : SPAWN_INTERVAL_MAX;
-  const delay = Math.random() * (maxDelay - minDelay) + minDelay;
-
-  setTimeout(() => {
-    if (gameRunning) spawnObstacle();
-  }, delay);
 }
 
 // ----------------------------
-// DUST PUFF
+// RANDOM DELAY FUNCTION
+// ----------------------------
+function getRandomDelay() {
+  const isHard = score >= HARD_MODE_SCORE;
+  const minDelay = isHard ? HARD_SPAWN_MIN : SPAWN_INTERVAL_MIN;
+  const maxDelay = isHard ? HARD_SPAWN_MAX : SPAWN_INTERVAL_MAX;
+  return Math.random() * (maxDelay - minDelay) + minDelay;
+}
+
+// ----------------------------
+// DUST PUFF EFFECT
 // ----------------------------
 function createDustPuff() {
   const puff = document.createElement("div");
