@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fox Leap!</title>
-
-  <link rel="icon" type="image/png" href="./assets/standingfox.png">
-
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css" />
 </head>
 <body>
+
+  <!-- UI -->
+  <div id="ui">
+    <button id="start-btn">Start Game</button>
+    <div id="score">Score: 0</div>
+  </div>
+
+  <!-- Game Area -->
   <div id="game">
     <div id="background"></div>
     <div id="ground"></div>
-    <img id="fox" src="./assets/standingfox.png" alt="Fox Avatar">
+    <img id="fox" src="./assets/standingfox.png" alt="Fox character" />
   </div>
 
-  <div id="ui">
-    <div id="instructions">
-  <h3>How to Play</h3>
-  <p>Press <strong>Space</strong> or <strong>↑ Arrow</strong> to make the fox jump.</p>
-  <p>Avoid logs and rocks — each obstacle you clear earns 1 point.</p>
-  <p>Reach <strong>15 points</strong> to win the game!</p>
-</div>
-
-    <button id="start-btn">Start Game</button>
-    <p id="score">Score: 0</p>
-    <p id="message"></p>
+  <!-- Instructions -->
+  <div id="instructions">
+    <h3>How to Play</h3>
+    <p>
+      🦊 Help the fox survive the forest!<br><br>
+      <strong>Space / W / ↑</strong> — Jump<br>
+      <strong>A / ←</strong> — Move Left<br>
+      <strong>D / →</strong> — Move Right<br><br>
+      Avoid logs, rocks, and traps — but watch out, a hunter will appear after round 10!<br>
+      Reach <strong>25 points</strong> to win the game!
+    </p>
   </div>
 
-  <script src="./js/data.js"></script>
+  <!-- Game Status Message -->
+  <div id="message"></div>
+
   <script src="./js/app.js"></script>
 </body>
 </html>
