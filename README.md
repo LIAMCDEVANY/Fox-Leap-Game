@@ -3,7 +3,7 @@ Fox Leap! is a 2D side-scrolling jumping game built with HTML, CSS, and JavaScri
 
 🎮 [Play Now](https://liamcdevany.github.io/Fox-Leap-Game/)
 
-![Fox Leap Screenshot](./assets/screenshot.png)
+![Fox Leap Screenshot]([./assets/screenshot.png](https://github.com/LIAMCDEVANY/Fox-Leap-Game/blob/main/FOX-LEAP.png?raw=true)
 
 
 FUTURE ENHANCEMENTS! 
